@@ -7,12 +7,24 @@ function Onboarding() {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [shareLocation, setShareLocation] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null); // Clear previous errors
 
-    // TODO: Add basic validation for name, phone, email
+    // Basic validation
+    if (!name || !phone || !email) {
+      setError('Please fill in all required fields.');
+      return;
+    }
+
+    // Phone number validation (basic check for 10 digits)
+    if (!/^\d{10}$/.test(phone)) {
+        setError('Please enter a valid 10-digit phone number.');
+        return;
+    }
 
     let lat = null;
     let lon = null;
@@ -26,20 +38,21 @@ function Onboarding() {
         lon = position.coords.longitude;
       } catch (error) {
         console.error('Error getting geolocation:', error);
-        // TODO: Handle location error gracefully
+        setError('Could not get your location. Please try again or disable location sharing.');
+        // Continue without location if getting it fails
       }
     }
 
     const profile = { name, phone, email, lat, lon, ts: Date.now() };
 
     try {
-      // TODO: Implement queueOffline fallback in sendToAppsScript
+      // sendToAppsScript has built-in queueOffline fallback
       await sendToAppsScript(profile, 'register'); // Assuming 'register' endpoint for onboarding
       localStorage.setItem('valarUser', JSON.stringify(profile));
       navigate(lat && lon ? '/calc' : '/set-shop'); // Redirect based on location sharing
     } catch (error) {
       console.error('Error saving profile:', error);
-      // TODO: Display error message to user
+      setError('Failed to save profile. Please try again.');
     }
   };
 
@@ -47,6 +60,11 @@ function Onboarding() {
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Welcome to Valar</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
+        {error && (
+          <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4" role="alert">
+            <p>{error}</p>
+          </div>
+        )}
         <div>
           <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
           <input
