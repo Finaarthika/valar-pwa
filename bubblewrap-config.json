@@ -1,0 +1,15 @@
+{
+  "baseUrl": "YOUR_APP_URL", // TODO: Replace with your deployed app URL
+  "host": "YOUR_APP_HOST", // TODO: Replace with your deployed app URL host
+  "name": "Valar – LTV Calculator",
+  "enableSiteSettings": true,
+  "enableNotifications": true,
+  "enableLocation": true,
+  "enableSystemShare": true,
+  "themeColor": "#ffffff", // TODO: Replace with your desired theme color from Aarthika-web
+  "backgroundColor": "#ffffff", // TODO: Replace with your desired background color from Aarthika-web
+  "iconUrl": "YOUR_APP_URL/icons/placeholder-512x512.png", // TODO: Replace with your deployed app icon URL
+  "splashUrl": "YOUR_APP_URL/icons/placeholder-512x512.png", // TODO: Replace with your deployed splash screen icon URL
+  "maskableIconUrl": "YOUR_APP_URL/icons/maskable_icon_x512.png", // TODO: Replace with your deployed maskable icon URL
+  "monochromeIconUrl": "YOUR_APP_URL/icons/monochrome_icon_x512.png" // TODO: Replace with your deployed monochrome icon URL
+}
